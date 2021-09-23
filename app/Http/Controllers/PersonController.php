@@ -23,7 +23,6 @@ class PersonController extends Controller
         $person = DB::table('people')
                 ->where('id', $id)
                 ->get();
-
         return $person;
     }
 
@@ -78,9 +77,9 @@ class PersonController extends Controller
         return $person;
     }
 
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
-          DB::table('people')->where('id', $id)->delete();  
+        DB::table('people')->where('id', $id)->delete();  
         return 204;
     }
 }
