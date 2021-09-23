@@ -20,16 +20,12 @@ class PersonController extends Controller
  
     public function show($id)
     {
-        $person = DB::table('people')
-                ->where('id', $id)
-                ->get();
+        $person = DB::select('select * from people where id = :id', ['id'=>$id]); 
         return $person;
     }
 
     public function store(Request $request)
     {
-
-        
         $firstName = $request->firstName;
         $lastName = $request->lastName;
         $dateOfBirth = $request->dateOfBirth;
@@ -37,15 +33,13 @@ class PersonController extends Controller
         $created_at = Carbon::now();
         $updated_at = Carbon::now();
         
+        $last_id = DB::getPdo()->lastInsertId();
 
-        $person = DB::table('people')->insert([
-            'firstName'=>$firstName,
-            'lastName'=>$lastName,
-            'dateOfBirth'=>$dateOfBirth,
-            'streetAddress'=> $streetAddress,
-            'created_at'=> $created_at,
-            'updated_at'=>$updated_at,
-        ]);
+        $sql ='insert into people (id, firstName, lastName, dateOfBirth, streetAddress, created_at, updated_at  ) values (:id, :firstName, :lastName, :dateOfBirth, :streetAddress, :created_at, :updated_at  )';
+        
+        $person =  DB::insert($sql, ['id'=>$last_id, 'firstName'=>$firstName, 'lastName'=>$lastName,  'dateOfBirth'=>$dateOfBirth, 'streetAddress'=>$streetAddress, 'created_at'=>$created_at, 'updated_at'=>$updated_at ]);
+        
+        
         
        
        return $person ;
@@ -61,9 +55,11 @@ class PersonController extends Controller
         $streetAddress = $request->streetAddress;
         $created_at = Carbon::now();
         $updated_at = Carbon::now();
+
+        $person = DB::update('update users set votes = 100 where firstName = :firstName, lastName = :lastName, dateOfBirth = :dateOfBirth, streetAddress = :streetAddress, created_at = :created_at, updated_at :updated_at', ['firstName'=>$firstName, 'lastName'=>$lastName, 'dateOfBirth'=>$dateOfBirth, 'streetAddress'=>$streetAddress, 'created_at'=>$created_at, 'updated_at'=>$updated_at]);  
         
 
-         $person = DB::table('people')
+         /* $person = DB::table('people')
               ->where('id', $id)
               ->update([
                 'firstName'=>$firstName,
@@ -72,14 +68,14 @@ class PersonController extends Controller
                 'streetAddress'=> $streetAddress,
                 'created_at'=> $created_at,
                 'updated_at'=>$updated_at,
-              ]);
+              ]); */
 
         return $person;
     }
 
     public function delete($id)
     {
-        DB::table('people')->where('id', $id)->delete();  
+         DB::delete('delete from people where id = :id', ['id'=>$id]); 
         return 204;
     }
 }
