@@ -13,7 +13,7 @@
     <title>Hello, world!</title>
 </head>
 
-<body>
+<body   >
 
     <main>
         @yield('content')

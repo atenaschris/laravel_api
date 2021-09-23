@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+
+    $response = Http::get('http://localhost:8000/api/persons');
+
+    dd($response);
+
+   return view('welcome');
+});
+Route::get('/', function () {
+
+    return view('detail');
+});
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::get('/', function () {
     return view('welcome');
 });
