@@ -48,7 +48,6 @@ class PersonController extends Controller
 
     public function update(Request $request, $id)
     {
-        
         $firstName = $request->firstName;
         $lastName = $request->lastName;
         $dateOfBirth = $request->dateOfBirth;
@@ -56,20 +55,19 @@ class PersonController extends Controller
         $created_at = Carbon::now();
         $updated_at = Carbon::now();
 
-        $person = DB::update('update users set votes = 100 where firstName = :firstName, lastName = :lastName, dateOfBirth = :dateOfBirth, streetAddress = :streetAddress, created_at = :created_at, updated_at :updated_at', ['firstName'=>$firstName, 'lastName'=>$lastName, 'dateOfBirth'=>$dateOfBirth, 'streetAddress'=>$streetAddress, 'created_at'=>$created_at, 'updated_at'=>$updated_at]);  
-        
-
-         /* $person = DB::table('people')
-              ->where('id', $id)
-              ->update([
-                'firstName'=>$firstName,
-                'lastName'=>$lastName,
-                'dateOfBirth'=>$dateOfBirth,
-                'streetAddress'=> $streetAddress,
-                'created_at'=> $created_at,
-                'updated_at'=>$updated_at,
-              ]); */
-
+   
+      
+        $person = DB::table('people')
+        ->where('id', $id)
+        ->update([
+          'firstName'=>$firstName,
+          'lastName'=>$lastName,
+          'dateOfBirth'=>$dateOfBirth,
+          'streetAddress'=> $streetAddress,
+          'created_at'=> $created_at,
+          'updated_at'=>$updated_at,
+        ]);
+         
         return $person;
     }
 
